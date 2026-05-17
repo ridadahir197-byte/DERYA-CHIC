@@ -53,10 +53,15 @@ function LoginPage() {
   };
 
   const google = async () => {
-    setBusy(true);
-    const r = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: `${window.location.origin}${search.redirect}`,
-    });
+  setBusy(true);
+  
+  // غانـتأكدو بلي الـ redirect ديما كيبدا بـ سلاش / وإلا غانصيفطوه للرئيسية ديريكت
+  const targetRedirect = search.redirect || '/';
+  const finalRedirectUri = `${window.location.origin}${targetRedirect.startsWith('/') ? targetRedirect : '/' + targetRedirect}`;
+
+  const r = await lovable.auth.signInWithOAuth("google", {
+    redirect_uri: finalRedirectUri,
+  });
     if ((r as any).error) {
       toast.error("Google sign-in failed");
       setBusy(false);
