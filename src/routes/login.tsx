@@ -54,21 +54,21 @@ function LoginPage() {
 
   const google = async () => {
   setBusy(true);
-  
-  // غانـتأكدو بلي الـ redirect ديما كيبدا بـ سلاش / وإلا غانصيفطوه للرئيسية ديريكت
-  const targetRedirect = search.redirect || '/';
-  const finalRedirectUri = `${window.location.origin}${targetRedirect.startsWith('/') ? targetRedirect : '/' + targetRedirect}`;
+  try {
+    // عيط لـ supabase ديريكت بلا lovable باش نتفاداو الـ 404 ديال السيرفر محليا
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/`,
+      },
+    });
 
-  const r = await lovable.auth.signInWithOAuth("google", {
-    redirect_uri: finalRedirectUri,
-  });
-    if ((r as any).error) {
-      toast.error("Google sign-in failed");
-      setBusy(false);
-    } else if (!(r as any).redirected) {
-      navigate({ to: search.redirect });
-    }
-  };
+    if (error) throw error;
+  } catch (err: any) {
+    toast.error(err.message || "Google sign-in failed");
+    setBusy(false);
+  }
+};
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-5 py-12">
