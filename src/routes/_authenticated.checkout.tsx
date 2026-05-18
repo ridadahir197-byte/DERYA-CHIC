@@ -15,8 +15,8 @@ export const Route = createFileRoute("/_authenticated/checkout")({
 });
 
 const SHIPPING = [
-  { id: "tetouan", label: "Livraison à Tétouan", desc: "24 hours", cost: 20, icon: Zap },
-  { id: "tanger", label: "Livraison à Tanger", desc: "24–48 hours", cost: 35, icon: Truck },
+  { id: "tetouan", label: "Livraison à Tétouan", desc: "6 hours", cost: 20, icon: Zap },
+  { id: "tanger", label: "Livraison à Tanger", desc: "12–24 hours", cost: 35, icon: Truck },
   { id: "maroc", label: "Livraison dans toutes les villes", desc: "2–4 days", cost: 40, icon: Truck },
 ];
 
